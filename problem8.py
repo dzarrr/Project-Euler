@@ -6,15 +6,22 @@ from collections import deque
 
 file  = open("problem8data.txt", "r")
 
-result = 1
+current_batch = []
 counter = 0
 q = deque()
+max_result = -1
+
 for line in file :
   for character in line.rstrip("\n\r") :
     counter += 1
+    result = 1
+    q.append(int(character))
     if counter >= 13 :
-      result /= q.popleft()
-    result *= int(character)
-    q.append(result)
-    print result, int(character)
+      for element in q :
+        result = result * element
+      if result > max_result :
+        max_result = result
+      q.popleft()
+
+print max_result
 
